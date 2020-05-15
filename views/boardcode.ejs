@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <%- include ('./head') %>
+    </head>
+    <body>
+        <h1>테이블 코드</h1>
+        <div id="wrapper">
+            <div style="text-align:right"><button type="button" onclick="javascript:location.href='/admin/codeDetail'">추가등록</button></div>
+            <table>
+                <tr>
+                    <th>순번</th>
+                    <th>게시판구분</th>
+                    <th>게시판명</th>
+                    <th>게시판설명</th>
+                    <th>경로</th>
+                    <th>수정</th>
+                    <th>삭제</th>
+                </tr>
+                <% for ( var i = 0; i < result.length; i++){ %>
+                <tr>
+                    <td><%= result[i].bno %></td>
+                    <td><%= result[i].code %></td>
+                    <td><%= result[i].name %></td>
+                    <td><%= result[i].context %></td>
+                    <td><%= result[i].route %></td>
+                    <td><button type="button" onclick="javascipt:fnCodeDetail('<%= result[i].bno %>')">수정</button></td>
+                    <td><button type="button" onclick="javascipt:fnDelete('<%= result[i].bno %>')">삭제</button></td>
+                </tr>
+                <% } %>
+            </table>
+        </div>
+        <script>
+        function fnCodeDetail(i) {
+            location.href = "/admin/codeDetail?bno=" + i;
+        }
+        function fnDelete(i) {
+            if(!confirm("삭제하시겠습니까?")) return;
+            $.ajax({
+                url: '/admin/codeDelete',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                        bno : i
+                    },
+                success: function(result) {
+                    var exit = result.result;
+                    if(exit == 'Success') {
+                        location.href = '/admin/boardcode';
+                    } else {
+                        alert('저장실패');	
+                    }
+                }
+            });
+        }
+        </script>
+    </body>
+</html>

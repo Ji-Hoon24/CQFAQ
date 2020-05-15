@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <%- include ('./head') %>
+    </head>
+    <body>
+        <h1>테이블 코드</h1>
+        <div id="wrapper">
+            <table>
+                <tr>
+                    <th>순번</th>
+                    <th>게시판구분</th>
+                    <th>제목</th>
+                    <th>내용</th>
+                    <th>순서</th>
+                </tr>
+                <% if(result != null && result.length > 0) { %>
+                <tr>
+                    <td><p id="bno"><%= result[0].bno %></p></td>
+                    <td><input type="text" id="code" value="<%= result[0].boardcode %>"></td>
+                    <td><input type="text" id="name" value="<%= result[0].title %>"></td>
+                    <td><textarea id="context"><%= result[0].content %></textarea></td>
+                    <td><input type="text" id="route" value="<%= result[0].orderby %>"></td>
+                </tr>
+                <% } else { %>
+                <tr>
+                    <td><p id="bno"></p></td>
+                    <td><input type="text" id="code"></td>
+                    <td><input type="text" id="name"></td>
+                    <td><textarea id="context"></textarea></td>
+                    <td><input type="text" id="route"></td>
+                </tr>
+                <% } %>
+            </table>
+            <button type="button" id="save">저장</button>
+        </div>
+        <script>
+        $(document).ready(function() {
+            $("#save").click(function() {
+                var bno = $("#bno").html();
+                var code = $("#code").val();
+                var name = $("#name").val();
+                var context = $("textarea#context").val();
+                var route = $("#route").val();
+
+                if(bno != ''){
+                    $.ajax({
+                        url: '/admin/boardSave',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {
+                                bno : bno,
+                                code : code,
+                                name : name,
+                                context : context,
+                                route : route
+                            },
+                        success: function(result) {
+                            var exit = result.result;
+                            if(exit == 'Success') {
+                                location.href = '/admin/board';
+                            } else {
+                                alert('저장실패');	
+                            }
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: '/admin/boardAdd',
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {
+                                code : code,
+                                name : name,
+                                context : context,
+                                route : route
+                            },
+                        success: function(result) {
+                            var exit = result.result;
+                            if(exit == 'Success') {
+                                location.href = '/admin/board';
+                            } else {
+                                alert('저장실패');	
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        </script>
+    </body>
+</html>

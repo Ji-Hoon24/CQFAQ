@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <%- include ('./head') %>
+    </head>
+    <body>
+        <input type="text" id="userId">
+        <input type="text" id="userPw">
+        <button type="button" id="login">로그인</button>
+<script>
+    $(document).ready(function() {
+        $('#login').click(function() {
+            var userId = $.trim($("#userId").val());
+            var userPw = $.trim($("#userPw").val());
+            if(userId == '') {
+                alert("아이디 입력이 필요합니다.");
+                $("#userId").focus();
+                return;
+            }
+            if(userPw == '') {
+                alert("비밀번호 입력이 필요합니다.");
+                $("#userPw").focus();
+                return;
+            }
+            $.ajax({
+                url: '/admin/login',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                        userId : userId,
+                        userPw : userPw
+                    },
+                success: function(result) {
+                    var loginCheck = result.result;
+                    if(loginCheck == 'Success') {
+                        location.href = '/';
+                    } else {
+                        alert('회원정보가 일치하지 않습니다.');	
+                    }
+                }
+            });
+        });
+        $("#userPw").keydown(function(key) {
+            if (key.keyCode == 13) {
+                $("#login").click();
+            }
+        });
+        $("#userId").focus();
+    });
+</script>
+</body>
+</html>

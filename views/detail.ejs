@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <%- include ('./head') %>
+    </head>
+    <body>
+        <div id="wrapper">
+            <section id="banner" class="style2">
+                <div class="inner">
+                    <span class="image">
+                        <img src="images/pic07.jpg" alt="" />
+                    </span>
+                    <header class="major">
+                        <h1 class="my-poor-xlarge"><%= result[0].name %></h1>
+                    </header>
+                    <div class="content">
+                        <p class="my-poor-medium"><%= result[0].context %></p>
+                    </div>
+                </div>
+            </section>
+
+            <div id="main">
+                <section id="one">
+                    <% for ( var i = 0; i < result.length; i++){ %>
+                    <div class="inner">
+                        <header class="major">
+                            <p style="font-size:23px;"><%= result[i].title %></p>
+                        </header>
+                        <p><%= result[i].content %></p>
+                    </div>
+                    <% } %>
+                </section>
+            </div>
+
+            <%- include ('./footer') %>
+        </div>
+    </body>
+</html>
