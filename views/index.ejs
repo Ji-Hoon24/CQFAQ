@@ -6,7 +6,23 @@
     <body>
         <div id="wrapper">
             <header id="header" class="alt">
-                <a href="/" class="logo"><strong style="letter-spacing: normal;font-size: large;">이로치팬텀</strong></a>
+                <a href="/" class="logo" style="width:60%;"><strong style="letter-spacing: normal;font-size: large;">이로치팬텀</strong></a>
+                <div id="nav">
+                    <ul class="menu">
+                        <li>
+                            <a class="menu-trigger" style="margin-top:5px;margin-left:65%;">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </a>
+                            <ul class="sub">
+                            <% for ( var i = 0; i < result.length; i++){ %>
+                                <li><a href="<%= result[i].route %>"><%= result[i].name %></a></li>
+                            <% } %>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </header>
 
             <section id="banner" class="major">
@@ -39,7 +55,24 @@
                     <% } %>
                 </section>
             </div>
+<script>
+	$(document).ready(function(){
+		$("#nav ul.sub").hide();
+		$("#nav ul.menu li").click(function(){
+			$("ul",this).slideToggle("fast");
+		});
+	});
+var burger = $('.menu-trigger');
 
+burger.each(function(index){
+	var $this = $(this);
+	
+	$this.on('click', function(e){
+		e.preventDefault();
+		$(this).toggleClass('active-' + (index+1));
+	})
+});
+</script>
             <%- include ('./footer') %>
         </div>
     </body>

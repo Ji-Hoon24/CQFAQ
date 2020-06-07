@@ -97,6 +97,18 @@ router.get('/etc', function(req, res) {
         });
 });
 
+router.post('/menu', function(req, res){
+	var stmt = 'select name, context, route from board_code';
+        connection.query(stmt, function (err, result) {
+                if(!err) {
+                        res.send({menu: result});
+                } else {
+                        console.log(err);
+                        console.log(result);
+                }
+        });
+});
+
 router.get('/adminlogin', function(req, res) {
         res.render('login');
 });

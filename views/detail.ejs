@@ -14,7 +14,20 @@
     <body>
         <div id="wrapper">
             <header id="header" class="alt">
-                <a href="/" class="logo"><strong style="letter-spacing: normal;font-size: large;">이로치팬텀</strong></a>
+                <a href="/" class="logo" style="width:60%;"><strong style="letter-spacing: normal;font-size: large;">이로치팬텀</strong></a>
+                <div id="nav">
+                    <ul class="menu">
+                        <li>
+                            <a class="menu-trigger" style="margin-top:5px;margin-left:65%;">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </a>
+                            <ul class="sub">
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </header>
             <section id="banner" class="style2">
                 <div class="inner">
@@ -43,14 +56,45 @@
                 </section>
             </div>
 <script>
-function fnView(i) {
-    var check = $("#view"+i).hasClass('view');
-    if(check) {
-        $("#view"+i).removeClass('view');
-    } else {
-        $("#view"+i).addClass('view');
+    function fnView(i) {
+        var check = $("#view"+i).hasClass('view');
+        if(check) {
+            $("#view"+i).removeClass('view');
+        } else {
+            $("#view"+i).addClass('view');
+        }
     }
-}
+    $(document).ready(function(){
+        $("#nav ul.sub").hide();
+        $("#nav ul.menu li").click(function(){
+            $("ul",this).slideToggle("fast");
+        });
+        $.post(
+            '/menu',
+            {},
+            function(arg) {
+                console.log(arg);
+                var menu = arg.menu;
+                console.log(menu);
+                var str = "";
+                for(var i=0; i<menu.length; i++) {
+                    str += '<li><a href="'+menu[i].route+'">'+menu[i].name+'</a></li>';
+                }
+                $('.sub').append(str);
+            }
+        );
+    });
+    var burger = $('.menu-trigger');
+    
+    burger.each(function(index){
+    var $this = $(this);
+    
+    $this.on('click', function(e){
+        e.preventDefault();
+        $(this).toggleClass('active-' + (index+1));
+    })
+});
+
 </script>
             <%- include ('./footer') %>
         </div>
