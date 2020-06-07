@@ -81,6 +81,7 @@ router.post('/codeAdd', function(req, res) {
 		var stmt = 'insert into board_code(code, name, context, route) values(' + mysql.escape(code) + ', ' + mysql.escape(name) + ', ' + mysql.escape(context) + ', ' + mysql.escape(route) + ')';
 		connection.query(stmt, function (err, result) {
 			if(err) {
+				console.log(err);
 				res.send({result : 'Fail'});
 			} else {
 				res.send({result : 'Success'});
@@ -110,7 +111,12 @@ router.post('/codeDelete', function(req, res) {
 
 router.get('/board', function(req, res) {
     console.log('board');
-	var stmt = 'select * from board';
+	var queryData = url.parse(req.url, true).query.code;
+	if(queryData > 0) {
+		var stmt = 'select * from board where boardcode = ' + mysql.escape(queryData);
+	} else {
+		var stmt = 'select * from board';
+	}
         connection.query(stmt, function (err, result) {
                 if(!err) {
                         res.render('board', {result: result});
