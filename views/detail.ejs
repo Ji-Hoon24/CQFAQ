@@ -73,12 +73,10 @@
             '/menu',
             {},
             function(arg) {
-                console.log(arg);
                 var menu = arg.menu;
-                console.log(menu);
                 var str = "";
                 for(var i=0; i<menu.length; i++) {
-                    str += '<li><a href="'+menu[i].route+'">'+menu[i].name+'</a></li>';
+                    str += '<li><button onclick="javascript:location.href=\''+menu[i].route+'\'" style="color:black;width:100%;padding-left:10px;text-align:left;">'+menu[i].name+'</button></li>';
                 }
                 $('.sub').append(str);
             }
