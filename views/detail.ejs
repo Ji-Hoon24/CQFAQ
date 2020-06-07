@@ -2,6 +2,14 @@
 <html>
     <head>
         <%- include ('./head') %>
+<style>
+.inner .contents{
+    display : none;
+}
+.view {
+    display : block !important;
+}
+</style>
     </head>
     <body>
         <div id="wrapper">
@@ -22,16 +30,25 @@
             <div id="main">
                 <section id="one">
                     <% for ( var i = 0; i < result.length; i++){ %>
-                    <div class="inner">
+                    <div class="inner" onclick="javascript:fnView('<%= i %>');">
                         <header class="major">
                             <p style="font-size:23px;"><%= result[i].title %></p>
                         </header>
-                        <p><%= result[i].content %></p>
+                        <p class="contents" id="view<%= i %>" value = "1"><%= result[i].content %></p>
                     </div>
                     <% } %>
                 </section>
             </div>
-
+<script>
+function fnView(i) {
+    var check = $("#view"+i).hasClass('view');
+    if(check) {
+        $("#view"+i).removeClass('view');
+    } else {
+        $("#view"+i).addClass('view');
+    }
+}
+</script>
             <%- include ('./footer') %>
         </div>
     </body>
