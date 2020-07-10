@@ -16,9 +16,6 @@
                                 <span></span>
                             </a>
                             <ul class="sub">
-                            <% for ( var i = 0; i < result.length; i++){ %>
-                                <li><a href="<%= result[i].route %>"><%= result[i].name %></a></li>
-                            <% } %>
                             </ul>
                         </li>
                     </ul>
@@ -56,21 +53,33 @@
                 </section>
             </div>
 <script>
-	$(document).ready(function(){
-		$("#nav ul.sub").hide();
-		$("#nav ul.menu li").click(function(){
-			$("ul",this).slideToggle("fast");
-		});
-	});
-var burger = $('.menu-trigger');
-
-burger.each(function(index){
-	var $this = $(this);
-	
-	$this.on('click', function(e){
-		e.preventDefault();
-		$(this).toggleClass('active-' + (index+1));
-	})
+    $(document).ready(function(){
+        $("#nav ul.sub").hide();
+        $("#nav ul.menu li").click(function(){
+            $("ul",this).slideToggle("fast");
+        });
+        $.post(
+            '/menu',
+            {},
+            function(arg) {
+                var menu = arg.menu;
+                var str = "";
+                for(var i=0; i<menu.length; i++) {
+                    str += '<li><button onclick="javascript:location.href=\''+menu[i].route+'\'" style="color:black;width:100%;padding-left:10px;text-align:left;">'+menu[i].name+'</button></li>';
+                }
+                $('.sub').append(str);
+            }
+        );
+    });
+    var burger = $('.menu-trigger');
+    
+    burger.each(function(index){
+    var $this = $(this);
+    
+    $this.on('click', function(e){
+        e.preventDefault();
+        $(this).toggleClass('active-' + (index+1));
+    })
 });
 </script>
             <%- include ('./footer') %>
