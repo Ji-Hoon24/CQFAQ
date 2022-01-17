@@ -7,5 +7,4 @@
 
 
 ### Use Skill
-Node.js, Express
-Mysql, jQuery
+Node.js, Express, Mysql, jQuery
