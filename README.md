@@ -8,3 +8,5 @@
 
 ### Use Skill
 Node.js, Express, Mysql, jQuery
+
+### 작업기간 약 12
